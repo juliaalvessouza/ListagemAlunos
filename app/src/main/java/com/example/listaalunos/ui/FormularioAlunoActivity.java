@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +19,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private static final String TITULO_APPBAR_NOVO_ALUNO = "Novo Aluno";
     private static final String TITULO_APPBAR_EDITA_ALUNO = "Edita Aluno";
     private EditText campoNome;
-    private EditText campoTelefone;
+    private EditText campoTelefoneProprio;
+    private EditText campoTelefoneReferencia;
     private EditText campoEmail;
     private RoomAlunoDAO alunoDAO;
     private Aluno aluno;
@@ -64,7 +64,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheCampos() {
         campoNome.setText(aluno.getNome());
-        campoTelefone.setText(aluno.getTelefone());
+        campoTelefoneProprio.setText(aluno.getTelefoneProprio());
+        campoTelefoneReferencia.setText(aluno.getTelefoneReferencia());
         campoEmail.setText(aluno.getEmail());
     }
 
@@ -80,17 +81,20 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void ids() {
         campoNome = findViewById(R.id.campo_nome);
-        campoTelefone = findViewById(R.id.campo_telefone);
+        campoTelefoneProprio = findViewById(R.id.campo_telefone_proprio);
+        campoTelefoneReferencia = findViewById(R.id.campo_telefone_referencia);
         campoEmail = findViewById(R.id.campo_email);
     }
 
     private void preencheAluno() {
         String nome = campoNome.getText().toString();
-        String telefone = campoTelefone.getText().toString();
+        String telefoneProprio = campoTelefoneProprio.getText().toString();
+        String telefoneReferencia = campoTelefoneReferencia.getText().toString();
         String email = campoEmail.getText().toString();
 
         aluno.setNome(nome);
-        aluno.setTelefone(telefone);
+        aluno.setTelefoneProprio(telefoneProprio);
+        aluno.setTelefoneReferencia(telefoneReferencia);
         aluno.setEmail(email);
     }
 }

@@ -35,7 +35,7 @@ public final class RoomAlunoDAO_Impl implements RoomAlunoDAO {
     this.__insertionAdapterOfAluno = new EntityInsertionAdapter<Aluno>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR ABORT INTO `Aluno` (`id`,`nome`,`telefone`,`email`,`momentoDeCadastro`) VALUES (nullif(?, 0),?,?,?,?)";
+        return "INSERT OR ABORT INTO `Aluno` (`id`,`nome`,`telefoneProprio`,`telefoneReferencia`,`email`,`momentoDeCadastro`) VALUES (nullif(?, 0),?,?,?,?,?)";
       }
 
       @Override
@@ -46,22 +46,27 @@ public final class RoomAlunoDAO_Impl implements RoomAlunoDAO {
         } else {
           stmt.bindString(2, value.getNome());
         }
-        if (value.getTelefone() == null) {
+        if (value.getTelefoneProprio() == null) {
           stmt.bindNull(3);
         } else {
-          stmt.bindString(3, value.getTelefone());
+          stmt.bindString(3, value.getTelefoneProprio());
         }
-        if (value.getEmail() == null) {
+        if (value.getTelefoneReferencia() == null) {
           stmt.bindNull(4);
         } else {
-          stmt.bindString(4, value.getEmail());
+          stmt.bindString(4, value.getTelefoneReferencia());
+        }
+        if (value.getEmail() == null) {
+          stmt.bindNull(5);
+        } else {
+          stmt.bindString(5, value.getEmail());
         }
         final Long _tmp;
         _tmp = __conversorCalendar.paraLong(value.getMomentoDeCadastro());
         if (_tmp == null) {
-          stmt.bindNull(5);
+          stmt.bindNull(6);
         } else {
-          stmt.bindLong(5, _tmp);
+          stmt.bindLong(6, _tmp);
         }
       }
     };
@@ -79,7 +84,7 @@ public final class RoomAlunoDAO_Impl implements RoomAlunoDAO {
     this.__updateAdapterOfAluno = new EntityDeletionOrUpdateAdapter<Aluno>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `Aluno` SET `id` = ?,`nome` = ?,`telefone` = ?,`email` = ?,`momentoDeCadastro` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `Aluno` SET `id` = ?,`nome` = ?,`telefoneProprio` = ?,`telefoneReferencia` = ?,`email` = ?,`momentoDeCadastro` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -90,24 +95,29 @@ public final class RoomAlunoDAO_Impl implements RoomAlunoDAO {
         } else {
           stmt.bindString(2, value.getNome());
         }
-        if (value.getTelefone() == null) {
+        if (value.getTelefoneProprio() == null) {
           stmt.bindNull(3);
         } else {
-          stmt.bindString(3, value.getTelefone());
+          stmt.bindString(3, value.getTelefoneProprio());
         }
-        if (value.getEmail() == null) {
+        if (value.getTelefoneReferencia() == null) {
           stmt.bindNull(4);
         } else {
-          stmt.bindString(4, value.getEmail());
+          stmt.bindString(4, value.getTelefoneReferencia());
+        }
+        if (value.getEmail() == null) {
+          stmt.bindNull(5);
+        } else {
+          stmt.bindString(5, value.getEmail());
         }
         final Long _tmp;
         _tmp = __conversorCalendar.paraLong(value.getMomentoDeCadastro());
         if (_tmp == null) {
-          stmt.bindNull(5);
+          stmt.bindNull(6);
         } else {
-          stmt.bindLong(5, _tmp);
+          stmt.bindLong(6, _tmp);
         }
-        stmt.bindLong(6, value.getId());
+        stmt.bindLong(7, value.getId());
       }
     };
   }
@@ -157,7 +167,8 @@ public final class RoomAlunoDAO_Impl implements RoomAlunoDAO {
     try {
       final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
       final int _cursorIndexOfNome = CursorUtil.getColumnIndexOrThrow(_cursor, "nome");
-      final int _cursorIndexOfTelefone = CursorUtil.getColumnIndexOrThrow(_cursor, "telefone");
+      final int _cursorIndexOfTelefoneProprio = CursorUtil.getColumnIndexOrThrow(_cursor, "telefoneProprio");
+      final int _cursorIndexOfTelefoneReferencia = CursorUtil.getColumnIndexOrThrow(_cursor, "telefoneReferencia");
       final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
       final int _cursorIndexOfMomentoDeCadastro = CursorUtil.getColumnIndexOrThrow(_cursor, "momentoDeCadastro");
       final List<Aluno> _result = new ArrayList<Aluno>(_cursor.getCount());
@@ -170,9 +181,12 @@ public final class RoomAlunoDAO_Impl implements RoomAlunoDAO {
         final String _tmpNome;
         _tmpNome = _cursor.getString(_cursorIndexOfNome);
         _item.setNome(_tmpNome);
-        final String _tmpTelefone;
-        _tmpTelefone = _cursor.getString(_cursorIndexOfTelefone);
-        _item.setTelefone(_tmpTelefone);
+        final String _tmpTelefoneProprio;
+        _tmpTelefoneProprio = _cursor.getString(_cursorIndexOfTelefoneProprio);
+        _item.setTelefoneProprio(_tmpTelefoneProprio);
+        final String _tmpTelefoneReferencia;
+        _tmpTelefoneReferencia = _cursor.getString(_cursorIndexOfTelefoneReferencia);
+        _item.setTelefoneReferencia(_tmpTelefoneReferencia);
         final String _tmpEmail;
         _tmpEmail = _cursor.getString(_cursorIndexOfEmail);
         _item.setEmail(_tmpEmail);

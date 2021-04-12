@@ -29,12 +29,12 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `Aluno` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT, `telefone` TEXT, `email` TEXT, `momentoDeCadastro` INTEGER)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `Aluno` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT, `telefoneProprio` TEXT, `telefoneReferencia` TEXT, `email` TEXT, `momentoDeCadastro` INTEGER)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bbd1d2740553c7fc9be1fa7a46af2429')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4a3e9b81437dd6301c89968a309eb321')");
       }
 
       @Override
@@ -78,10 +78,11 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsAluno = new HashMap<String, TableInfo.Column>(5);
+        final HashMap<String, TableInfo.Column> _columnsAluno = new HashMap<String, TableInfo.Column>(6);
         _columnsAluno.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAluno.put("nome", new TableInfo.Column("nome", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsAluno.put("telefone", new TableInfo.Column("telefone", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAluno.put("telefoneProprio", new TableInfo.Column("telefoneProprio", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAluno.put("telefoneReferencia", new TableInfo.Column("telefoneReferencia", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAluno.put("email", new TableInfo.Column("email", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAluno.put("momentoDeCadastro", new TableInfo.Column("momentoDeCadastro", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysAluno = new HashSet<TableInfo.ForeignKey>(0);
@@ -95,7 +96,7 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "bbd1d2740553c7fc9be1fa7a46af2429", "d70a90d5b0cf6d0045ce519407042fde");
+    }, "4a3e9b81437dd6301c89968a309eb321", "148fa14bc6ea7e2bb4ff5d32296aab9a");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)

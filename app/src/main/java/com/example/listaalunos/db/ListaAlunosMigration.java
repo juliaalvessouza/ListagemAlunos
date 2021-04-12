@@ -6,14 +6,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 class ListaAlunosMigration {
 
-    public static final Migration TODAS_MIGRATION = new Migration(2, 3) {
-        @Override
-        public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE Aluno ADD COLUMN momentoDeCadastro INTEGER");
-        }
-    };
+//    public static final Migration[] TODAS_MIGRATION = { ..coloca as migration aqui };
 
 }
+// SEGUE EXEMPLOS DE MIGRATIONS
+//    public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+//        @Override
+//        public void migrate(@NonNull SupportSQLiteDatabase database) {
+//            database.execSQL("ALTER TABLE Aluno ADD COLUMN momentoDeCadastro INTEGER");
+//        }
+//
+//    };
+//
+
 
 //                .addMigrations(new Migration(1, 2) {
 //                    @Override

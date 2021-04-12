@@ -1777,7 +1777,8 @@ id buttonPanel
 id cache_measures
 id campo_email
 id campo_nome
-id campo_telefone
+id campo_telefone_proprio
+id campo_telefone_referencia
 id cancel_button
 id center
 id center_horizontal
@@ -2290,7 +2291,8 @@ string button_remover
 string button_salvar_o_aluno
 string campo_email
 string campo_nome
-string campo_telefone
+string campo_telefone_proprio
+string campo_telefone_referencia
 string character_counter_content_description
 string character_counter_overflowed_content_description
 string character_counter_pattern

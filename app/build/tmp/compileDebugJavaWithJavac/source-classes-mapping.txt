@@ -6,7 +6,6 @@ com/example/listaalunos/adapter/AdapterListaAlunos.java
  com.example.listaalunos.adapter.AdapterListaAlunos
 com/example/listaalunos/db/ListaAlunosMigration.java
  com.example.listaalunos.db.ListaAlunosMigration
- com.example.listaalunos.db.ListaAlunosMigration$1
 com/example/listaalunos/model/Aluno.java
  com.example.listaalunos.model.Aluno
 com/example/listaalunos/BuildConfig.java

@@ -16,12 +16,21 @@ caso não funciona, acrescentar no código como principal-->
         android:importantForAutofill="no" />
 
     <EditText
-        android:id="@+id/campo_telefone"
+        android:id="@+id/campo_telefone_proprio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:inputType="phone"
-        android:hint="@string/campo_telefone"
+        android:hint="@string/campo_telefone_proprio"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/campo_telefone_referencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:inputType="phone"
+        android:hint="@string/campo_telefone_referencia"
         android:importantForAutofill="no" />
 
     <EditText

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">ListaAlunos</string>
     <string name="campo_email">Email</string>
-    <string name="campo_telefone">Telefone</string>
+    <string name="campo_telefone_proprio">Telefone (Próprio)</string>
+    <string name="campo_telefone_referencia">Telefone (Referência)</string>
     <string name="campo_nome">Nome</string>
     <string name="button_salvar_o_aluno">Salvar o Aluno</string>
     <string name="button_remover">Remover</string>

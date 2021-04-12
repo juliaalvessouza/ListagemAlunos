@@ -16,16 +16,16 @@
         "source": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/generated/res/pngs/debug/drawable-anydpi-v24/ic_launcher_foreground.xml"
     },
     {
-        "merged": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_action_novo_aluno.png.flat",
-        "source": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/src/main/res/drawable-xxhdpi/ic_action_novo_aluno.png"
+        "merged": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/generated/res/pngs/debug/drawable-hdpi/ic_launcher_background.png"
     },
     {
         "merged": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
         "source": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher_background.png.flat",
-        "source": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/generated/res/pngs/debug/drawable-hdpi/ic_launcher_background.png"
+        "merged": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/res/merged/debug/drawable-xxhdpi_ic_action_novo_aluno.png.flat",
+        "source": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/src/main/res/drawable-xxhdpi/ic_action_novo_aluno.png"
     },
     {
         "merged": "/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
