@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--importante verificar a funcionalidade do scrollView em outros aparelhos,
+caso não funciona, acrescentar no código como principal-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/campo_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:inputType="textCapWords"
+        android:hint="@string/campo_nome"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/campo_telefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:inputType="phone"
+        android:hint="@string/campo_telefone"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/campo_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/campo_email"
+        android:importantForAutofill="no" />
+
+</LinearLayout>
