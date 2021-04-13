@@ -8,10 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.example.listaalunos.R;
 import com.example.listaalunos.daoRoom.RoomAlunoDAO;
 import com.example.listaalunos.db.ListaAlunosDatabase;
+import com.example.listaalunos.db.TelefoneAlunoDAO;
 import com.example.listaalunos.model.Aluno;
+import com.example.listaalunos.model.Telefone;
+import com.example.listaalunos.model.TipoTelefone;
+
 import static com.example.listaalunos.ui.ConstantesActivities.CHAVE_ALUNO;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
@@ -23,6 +29,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoTelefoneReferencia;
     private EditText campoEmail;
     private RoomAlunoDAO alunoDAO;
+    private TelefoneAlunoDAO telefoneAlunoDAO;
     private Aluno aluno;
 
     @Override
@@ -31,6 +38,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario_aluno);
         ListaAlunosDatabase database = ListaAlunosDatabase.getInstance(this);
         alunoDAO = database.getRoomAlunoDAO();
+        telefoneAlunoDAO = database.getTelefoneAlunoDAO();
         ids();
         carregaAluno();
     }
@@ -64,8 +72,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheCampos() {
         campoNome.setText(aluno.getNome());
-        campoTelefoneProprio.setText(aluno.getTelefoneProprio());
-        campoTelefoneReferencia.setText(aluno.getTelefoneReferencia());
+//        campoTelefoneProprio.setText(aluno.getTelefoneProprio());
+//        campoTelefoneReferencia.setText(aluno.getTelefoneReferencia());
         campoEmail.setText(aluno.getEmail());
     }
 
@@ -74,7 +82,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         if(aluno.temIdValido()){
             alunoDAO.edita(aluno);
         } else {
-            alunoDAO.salva(aluno);
+            int alunoId = alunoDAO.salva(aluno).intValue();
+            String numeroProprio = campoTelefoneProprio.getText().toString();
+            Telefone telefoneProprio = new Telefone(numeroProprio, TipoTelefone.PROPRIO, alunoId);
+            String numeroReferencia = campoTelefoneReferencia.getText().toString();
+            Telefone telefoneReferencia = new Telefone(numeroReferencia, TipoTelefone.REFERENCIA, alunoId);
+            telefoneAlunoDAO.salva(telefoneProprio, telefoneReferencia);
         }
         finish();
     }
@@ -93,8 +106,8 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         String email = campoEmail.getText().toString();
 
         aluno.setNome(nome);
-        aluno.setTelefoneProprio(telefoneProprio);
-        aluno.setTelefoneReferencia(telefoneReferencia);
+//        aluno.setTelefoneProprio(telefoneProprio);
+//        aluno.setTelefoneReferencia(telefoneReferencia);
         aluno.setEmail(email);
     }
 }

@@ -27,19 +27,23 @@ import java.util.Set;
 public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
   private volatile RoomAlunoDAO _roomAlunoDAO;
 
+  private volatile TelefoneAlunoDAO _telefoneAlunoDAO;
+
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(2) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `Aluno` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT, `telefoneProprio` TEXT, `telefoneReferencia` TEXT, `email` TEXT, `momentoDeCadastro` INTEGER)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `Aluno` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT, `email` TEXT, `momentoDeCadastro` INTEGER)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `Telefone` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `numero` TEXT, `tipo` TEXT, `alunoId` INTEGER NOT NULL)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4a3e9b81437dd6301c89968a309eb321')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '348cf6575d7f35a4a29e69a910b3b122')");
       }
 
       @Override
       public void dropAllTables(SupportSQLiteDatabase _db) {
         _db.execSQL("DROP TABLE IF EXISTS `Aluno`");
+        _db.execSQL("DROP TABLE IF EXISTS `Telefone`");
         if (mCallbacks != null) {
           for (int _i = 0, _size = mCallbacks.size(); _i < _size; _i++) {
             mCallbacks.get(_i).onDestructiveMigration(_db);
@@ -78,11 +82,9 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
 
       @Override
       protected RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsAluno = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsAluno = new HashMap<String, TableInfo.Column>(4);
         _columnsAluno.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAluno.put("nome", new TableInfo.Column("nome", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsAluno.put("telefoneProprio", new TableInfo.Column("telefoneProprio", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsAluno.put("telefoneReferencia", new TableInfo.Column("telefoneReferencia", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAluno.put("email", new TableInfo.Column("email", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAluno.put("momentoDeCadastro", new TableInfo.Column("momentoDeCadastro", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysAluno = new HashSet<TableInfo.ForeignKey>(0);
@@ -94,9 +96,23 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
                   + " Expected:\n" + _infoAluno + "\n"
                   + " Found:\n" + _existingAluno);
         }
+        final HashMap<String, TableInfo.Column> _columnsTelefone = new HashMap<String, TableInfo.Column>(4);
+        _columnsTelefone.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsTelefone.put("numero", new TableInfo.Column("numero", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsTelefone.put("tipo", new TableInfo.Column("tipo", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsTelefone.put("alunoId", new TableInfo.Column("alunoId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysTelefone = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesTelefone = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoTelefone = new TableInfo("Telefone", _columnsTelefone, _foreignKeysTelefone, _indicesTelefone);
+        final TableInfo _existingTelefone = TableInfo.read(_db, "Telefone");
+        if (! _infoTelefone.equals(_existingTelefone)) {
+          return new RoomOpenHelper.ValidationResult(false, "Telefone(com.example.listaalunos.model.Telefone).\n"
+                  + " Expected:\n" + _infoTelefone + "\n"
+                  + " Found:\n" + _existingTelefone);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "4a3e9b81437dd6301c89968a309eb321", "148fa14bc6ea7e2bb4ff5d32296aab9a");
+    }, "348cf6575d7f35a4a29e69a910b3b122", "0f13c4d72ace4b8feae3a121dc667a37");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)
@@ -109,7 +125,7 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "Aluno");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "Aluno","Telefone");
   }
 
   @Override
@@ -119,6 +135,7 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
     try {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `Aluno`");
+      _db.execSQL("DELETE FROM `Telefone`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -139,6 +156,20 @@ public final class ListaAlunosDatabase_Impl extends ListaAlunosDatabase {
           _roomAlunoDAO = new RoomAlunoDAO_Impl(this);
         }
         return _roomAlunoDAO;
+      }
+    }
+  }
+
+  @Override
+  public TelefoneAlunoDAO getTelefoneAlunoDAO() {
+    if (_telefoneAlunoDAO != null) {
+      return _telefoneAlunoDAO;
+    } else {
+      synchronized(this) {
+        if(_telefoneAlunoDAO == null) {
+          _telefoneAlunoDAO = new TelefoneAlunoDAO_Impl(this);
+        }
+        return _telefoneAlunoDAO;
       }
     }
   }

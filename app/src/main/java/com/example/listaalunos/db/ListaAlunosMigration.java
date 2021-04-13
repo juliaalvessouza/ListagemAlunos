@@ -4,9 +4,46 @@ import androidx.annotation.NonNull;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.listaalunos.model.TipoTelefone;
+
+import static com.example.listaalunos.model.TipoTelefone.PROPRIO;
+
 class ListaAlunosMigration {
 
-//    public static final Migration[] TODAS_MIGRATION = { ..coloca as migration aqui };
+//    public static final Migration[] TODAS_MIGRATION = {};
+
+    public static final Migration MIGRATION_1_2 = new Migration(1,2) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Aluno_novo` (`" +
+                    "id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`nome` TEXT, " +
+                    "`email` TEXT, " +
+                    "`momentoDeCadastro` INTEGER)");
+
+            database.execSQL("INSERT INTO Aluno_novo (id, nome, email, momentoDeCadastro)" +
+                                "SELECT id, nome, email, momentoDeCadastro FROM aluno");
+
+            database.execSQL("CREATE TABLE IF NOT EXISTS `Telefone` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`numero` TEXT, " +
+                    "`tipo` TEXT, " +
+                    "`alunoId` INTEGER NOT NULL)");
+
+            database.execSQL("INSERT INTO Telefone (numero, alunoId)" +
+                    "SELECT telefoneProprio, id FROM aluno");
+
+            database.execSQL("UPDATE Telefone SET tipo = ?", new TipoTelefone[]{PROPRIO});
+
+            database.execSQL("DROP TABLE aluno");
+
+            database.execSQL("ALTER TABLE Aluno_novo RENAME TO aluno");
+        }
+
+
+    };
+
+
 
 }
 // SEGUE EXEMPLOS DE MIGRATIONS

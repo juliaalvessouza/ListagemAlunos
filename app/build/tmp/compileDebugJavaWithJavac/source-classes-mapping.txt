@@ -2,21 +2,30 @@ com/example/listaalunos/db/ConversorCalendar.java
  com.example.listaalunos.db.ConversorCalendar
 com/example/listaalunos/db/ListaAlunosDatabase.java
  com.example.listaalunos.db.ListaAlunosDatabase
+com/example/listaalunos/db/TelefoneAlunoDAO.java
+ com.example.listaalunos.db.TelefoneAlunoDAO
 com/example/listaalunos/adapter/AdapterListaAlunos.java
  com.example.listaalunos.adapter.AdapterListaAlunos
-com/example/listaalunos/db/ListaAlunosMigration.java
- com.example.listaalunos.db.ListaAlunosMigration
-com/example/listaalunos/model/Aluno.java
- com.example.listaalunos.model.Aluno
 com/example/listaalunos/BuildConfig.java
  com.example.listaalunos.BuildConfig
+com/example/listaalunos/db/ConversorTipoTelefone.java
+ com.example.listaalunos.db.ConversorTipoTelefone
 com/example/listaalunos/ui/FormularioAlunoActivity.java
  com.example.listaalunos.ui.FormularioAlunoActivity
-com/example/listaalunos/ui/ConstantesActivities.java
- com.example.listaalunos.ui.ConstantesActivities
 com/example/listaalunos/daoRoom/RoomAlunoDAO.java
  com.example.listaalunos.daoRoom.RoomAlunoDAO
-com/example/listaalunos/ui/ListaAlunosActivity.java
- com.example.listaalunos.ui.ListaAlunosActivity
+com/example/listaalunos/model/Telefone.java
+ com.example.listaalunos.model.Telefone
 com/example/listaalunos/ui/ListaAlunosView.java
  com.example.listaalunos.ui.ListaAlunosView
+com/example/listaalunos/model/TipoTelefone.java
+ com.example.listaalunos.model.TipoTelefone
+com/example/listaalunos/db/ListaAlunosMigration.java
+ com.example.listaalunos.db.ListaAlunosMigration
+ com.example.listaalunos.db.ListaAlunosMigration$1
+com/example/listaalunos/model/Aluno.java
+ com.example.listaalunos.model.Aluno
+com/example/listaalunos/ui/ConstantesActivities.java
+ com.example.listaalunos.ui.ConstantesActivities
+com/example/listaalunos/ui/ListaAlunosActivity.java
+ com.example.listaalunos.ui.ListaAlunosActivity
