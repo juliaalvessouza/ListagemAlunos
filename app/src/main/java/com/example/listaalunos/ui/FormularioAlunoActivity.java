@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.listaalunos.R;
 import com.example.listaalunos.daoRoom.RoomAlunoDAO;
@@ -17,6 +16,8 @@ import com.example.listaalunos.db.TelefoneAlunoDAO;
 import com.example.listaalunos.model.Aluno;
 import com.example.listaalunos.model.Telefone;
 import com.example.listaalunos.model.TipoTelefone;
+
+import java.util.List;
 
 import static com.example.listaalunos.ui.ConstantesActivities.CHAVE_ALUNO;
 
@@ -31,6 +32,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private RoomAlunoDAO alunoDAO;
     private TelefoneAlunoDAO telefoneAlunoDAO;
     private Aluno aluno;
+    private List<Telefone> telefonesDoAluno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,24 +74,67 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
     private void preencheCampos() {
         campoNome.setText(aluno.getNome());
-//        campoTelefoneProprio.setText(aluno.getTelefoneProprio());
-//        campoTelefoneReferencia.setText(aluno.getTelefoneReferencia());
         campoEmail.setText(aluno.getEmail());
+        preencheCamposDeTelefone();
+    }
+
+    private void preencheCamposDeTelefone() {
+        telefonesDoAluno = telefoneAlunoDAO.buscaTodosTelefone(aluno.getId());
+        for(Telefone telefone: telefonesDoAluno){
+            if (telefone.getTipo() == TipoTelefone.PROPRIO){
+                campoTelefoneProprio.setText(telefone.getNumero());
+            } else {
+                campoTelefoneReferencia.setText(telefone.getNumero());
+            }
+        }
     }
 
     private void finalizaFormulario() {
         preencheAluno();
+
+        Telefone telefoneProprio = criaTelefone(campoTelefoneProprio, TipoTelefone.PROPRIO);
+        Telefone telefoneReferencia = criaTelefone(campoTelefoneReferencia, TipoTelefone.REFERENCIA);
+
         if(aluno.temIdValido()){
-            alunoDAO.edita(aluno);
+            editaAluno(telefoneProprio, telefoneReferencia);
         } else {
-            int alunoId = alunoDAO.salva(aluno).intValue();
-            String numeroProprio = campoTelefoneProprio.getText().toString();
-            Telefone telefoneProprio = new Telefone(numeroProprio, TipoTelefone.PROPRIO, alunoId);
-            String numeroReferencia = campoTelefoneReferencia.getText().toString();
-            Telefone telefoneReferencia = new Telefone(numeroReferencia, TipoTelefone.REFERENCIA, alunoId);
-            telefoneAlunoDAO.salva(telefoneProprio, telefoneReferencia);
+            salvaAluno(telefoneProprio, telefoneReferencia);
         }
         finish();
+    }
+
+    private Telefone criaTelefone(EditText campoTelefoneProprio, TipoTelefone proprio) {
+        String numeroProprio = campoTelefoneProprio.getText().toString();
+        return new Telefone(numeroProprio, proprio);
+    }
+
+    private void salvaAluno(Telefone telefoneProprio, Telefone telefoneReferencia) {
+        int alunoId = alunoDAO.salva(aluno).intValue();
+        vinculaAlunocomTelefone(alunoId, telefoneProprio, telefoneReferencia);
+        telefoneAlunoDAO.salva(telefoneProprio, telefoneReferencia);
+    }
+
+    private void editaAluno(Telefone telefoneProprio, Telefone telefoneReferencia) {
+        alunoDAO.edita(aluno);
+        vinculaAlunocomTelefone(aluno.getId(), telefoneProprio, telefoneReferencia);
+        atualizaIdsDosTelefones(telefoneProprio, telefoneReferencia);
+        telefoneAlunoDAO.atualiza(telefoneProprio, telefoneReferencia);
+    }
+
+    private void atualizaIdsDosTelefones(Telefone telefoneProprio, Telefone telefoneReferencia) {
+        for(Telefone telefone : telefonesDoAluno){
+            if(telefone.getTipo() == TipoTelefone.PROPRIO){
+               telefoneProprio.setId(telefone.getId());
+            }else {
+                telefoneReferencia.setId(telefone.getId());
+            }
+        }
+    }
+
+    private void vinculaAlunocomTelefone( int alunoId, Telefone... telefones) {
+        for (Telefone telefone : telefones){
+            telefone.setAlunoId(alunoId);
+        }
     }
 
     private void ids() {

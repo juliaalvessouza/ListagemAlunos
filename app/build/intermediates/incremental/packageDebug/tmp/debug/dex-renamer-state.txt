@@ -1,4 +1,4 @@
-#Tue Apr 13 11:58:51 BRT 2021
+#Wed Apr 14 08:36:32 BRT 2021
 base.0=/home/julia/AndroidStudioProjects/Alura/ListaAlunos/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

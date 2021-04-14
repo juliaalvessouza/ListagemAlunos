@@ -21,7 +21,7 @@ import static androidx.room.ForeignKey.CASCADE;
             onDelete = CASCADE)
     private int alunoId;
 
-    public Telefone(String numero, TipoTelefone tipo, int alunoId) {
+    public Telefone(String numero, TipoTelefone tipo) {
         this.numero = numero;
         this.tipo = tipo;
         this.alunoId = alunoId;
@@ -29,6 +29,10 @@ import static androidx.room.ForeignKey.CASCADE;
 
     public String getNumero() {
         return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public int getId() {
